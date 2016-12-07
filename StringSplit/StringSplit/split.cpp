@@ -9,7 +9,7 @@
 #include <iostream>
 using namespace std;
 
-// strtok 非线程安全，且会改变buffer
+// strtok is not thread safe, and change buffer
 void split(char* buffer, const char* delim, vector<string>& ret)
 {
     char* token = strtok(buffer, delim);
