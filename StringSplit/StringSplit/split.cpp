@@ -34,6 +34,17 @@ vector<string>& split(const string& str,const char delim, vector<string>& ret, b
 
 int main()
 {
-    char* buffer = "This is a test";
-    cout << buffer << endl;
+    char buffer[] = "This is *a test";
+	vector<string> ret;
+	split(buffer, " *", ret);
+	for (int i = 0; i < ret.size(); i++)
+		cout << ret[i] << endl;
+	cout << buffer << endl;
+
+	string buffer2 = "This is  another test!";
+	ret.clear();
+	split(buffer2, ' ', ret, false);
+	for (int i = 0; i < ret.size(); i++)
+		cout << ret[i] << endl;
+	cout << buffer2 << endl;
 }
