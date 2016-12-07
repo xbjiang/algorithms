@@ -9,7 +9,7 @@
 #include <iostream>
 using namespace std;
 
-// strtok is not thread safe, and change buffer
+// strtok is not thread safe, and change buffer; it writes '\0' characters in buffer
 void split(char* buffer, const char* delim, vector<string>& ret)
 {
     char* token = strtok(buffer, delim);
