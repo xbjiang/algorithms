@@ -10,7 +10,7 @@
 using namespace std;
 
 // strtok is not thread safe, and change buffer; it writes '\0' characters in buffer
-void split(char* buffer, const char* delim, vector<string>& ret)
+/*void split(char* buffer, const char* delim, vector<string>& ret)
 {
     char* token = strtok(buffer, delim);
     while (token != NULL)
@@ -18,7 +18,7 @@ void split(char* buffer, const char* delim, vector<string>& ret)
         ret.push_back(token);
         token = strtok(NULL, delim);
     }
-}
+}*/
 
 vector<string>& split(const string& str,const char delim, vector<string>& ret, bool skip_empty = true)
 {
@@ -32,19 +32,26 @@ vector<string>& split(const string& str,const char delim, vector<string>& ret, b
     return ret;
 }
 
+vector<string>& split(const string& str, const string& delimeters, vector<string>& ret)
+{
+    string::size_type pos, prev = 0;
+    while ((pos = str.find_first_of(delimeters, prev)) != string::npos)
+    {
+        if (pos > prev)
+        {
+            //if (skip_empty && pos - prev == 1) break; // this line is useless, and also wrong for some specific case, i.e. "a,a,a,a,a,a"
+            ret.emplace_back(str, prev, pos - prev);
+        }
+        prev = pos + 1;
+    }
+    if (prev < str.size()) ret.emplace_back(str, prev, str.size() - prev);
+    return ret;
+}
+
 int main()
 {
-    char buffer[] = "This is *a test";
-	vector<string> ret;
-	split(buffer, " *", ret);
-	for (int i = 0; i < ret.size(); i++)
-		cout << ret[i] << endl;
-	cout << buffer << endl;
-
-	string buffer2 = "This is  another test!";
-	ret.clear();
-	split(buffer2, ' ', ret, false);
-	for (int i = 0; i < ret.size(); i++)
-		cout << ret[i] << endl;
-	cout << buffer2 << endl;
+    string str("Windows,Linux||,|MacOS All");
+    vector<string> ret;
+    for (const auto& s : split("a,a,a,a,a,a", ",| ", ret))
+        cout << s << endl;
 }
