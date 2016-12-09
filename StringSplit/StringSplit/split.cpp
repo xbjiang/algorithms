@@ -27,7 +27,7 @@ vector<string>& split(const string& str,const char delim, vector<string>& ret, b
     while (getline(iss, item, delim))
     {
         if (skip_empty && item.empty()) continue;
-        else ret.push_back(item);
+        ret.push_back(item); 
     }
     return ret;
 }
