@@ -39,7 +39,7 @@ vector<string>& split(const string& str, const string& delimeters, vector<string
     {
         if (pos > prev)
         {
-            //if (skip_empty && pos - prev == 1) break; // this line is useless, and also wrong for some specific case, i.e. "a,a,a,a,a,a"
+            //if (skip_empty && pos - prev == 1) break; // this line is useless, and also wrong for some specific case, i.e., "a,a,a,a,a,a"
             ret.emplace_back(str, prev, pos - prev);
         }
         prev = pos + 1;
