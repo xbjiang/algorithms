@@ -9,7 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Permutation", "Permutation\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Combination", "Combination\Combination.vcxproj", "{8380FCA9-B71B-49AC-B5F7-A4FDDDCF9DBE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StringMatch", "StringMatch\StringMatch.vcxproj", "{91D0A92E-A053-4CD0-B73D-1506E3FB1213}"
+=======
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KMP", "KMP\KMP.vcxproj", "{037ADFC0-A2E5-41DC-AF5A-F64862251611}"
+>>>>>>> 2e1c5234cd126bffc5879069c4eba560ecc3a611
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +31,17 @@ Global
 		{8380FCA9-B71B-49AC-B5F7-A4FDDDCF9DBE}.Debug|Win32.Build.0 = Debug|Win32
 		{8380FCA9-B71B-49AC-B5F7-A4FDDDCF9DBE}.Release|Win32.ActiveCfg = Release|Win32
 		{8380FCA9-B71B-49AC-B5F7-A4FDDDCF9DBE}.Release|Win32.Build.0 = Release|Win32
+<<<<<<< HEAD
 		{91D0A92E-A053-4CD0-B73D-1506E3FB1213}.Debug|Win32.ActiveCfg = Debug|Win32
 		{91D0A92E-A053-4CD0-B73D-1506E3FB1213}.Debug|Win32.Build.0 = Debug|Win32
 		{91D0A92E-A053-4CD0-B73D-1506E3FB1213}.Release|Win32.ActiveCfg = Release|Win32
 		{91D0A92E-A053-4CD0-B73D-1506E3FB1213}.Release|Win32.Build.0 = Release|Win32
+=======
+		{037ADFC0-A2E5-41DC-AF5A-F64862251611}.Debug|Win32.ActiveCfg = Debug|Win32
+		{037ADFC0-A2E5-41DC-AF5A-F64862251611}.Debug|Win32.Build.0 = Debug|Win32
+		{037ADFC0-A2E5-41DC-AF5A-F64862251611}.Release|Win32.ActiveCfg = Release|Win32
+		{037ADFC0-A2E5-41DC-AF5A-F64862251611}.Release|Win32.Build.0 = Release|Win32
+>>>>>>> 2e1c5234cd126bffc5879069c4eba560ecc3a611
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
