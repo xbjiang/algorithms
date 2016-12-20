@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Combination", "Combination\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KMP", "KMP\KMP.vcxproj", "{037ADFC0-A2E5-41DC-AF5A-F64862251611}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Levenshtein", "levenshtein\levenshtein.vcxproj", "{E6B05E2E-F3A0-4C5D-AE62-4E65D2199360}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -33,6 +35,10 @@ Global
 		{037ADFC0-A2E5-41DC-AF5A-F64862251611}.Debug|Win32.Build.0 = Debug|Win32
 		{037ADFC0-A2E5-41DC-AF5A-F64862251611}.Release|Win32.ActiveCfg = Release|Win32
 		{037ADFC0-A2E5-41DC-AF5A-F64862251611}.Release|Win32.Build.0 = Release|Win32
+		{E6B05E2E-F3A0-4C5D-AE62-4E65D2199360}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E6B05E2E-F3A0-4C5D-AE62-4E65D2199360}.Debug|Win32.Build.0 = Debug|Win32
+		{E6B05E2E-F3A0-4C5D-AE62-4E65D2199360}.Release|Win32.ActiveCfg = Release|Win32
+		{E6B05E2E-F3A0-4C5D-AE62-4E65D2199360}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
