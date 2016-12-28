@@ -54,10 +54,10 @@ void createMGraph(MGraph* graph)
     }
 }
 
-int main()
-{
-    MGraph graph;
-    createMGraph(&graph);
-    DFSTraverse(&graph);
-    cout << endl;
-}
+//int main()
+//{
+//    MGraph graph;
+//    createMGraph(&graph);
+//    DFSTraverse(&graph);
+//    cout << endl;
+//}
