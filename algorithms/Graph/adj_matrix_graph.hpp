@@ -1,5 +1,6 @@
 #include <iostream>
 #include <assert.h>
+#include <unordered_map>
 
 #ifndef ADJ_MATRIX_GRAPH_HPP
 #define ADJ_MATRIX_GRAPH_HPP
@@ -13,10 +14,12 @@ public:
     ~AdjMatrixGraph();
     int addEdge(int i, int j);
     void DFSTraverse();
+	int getVertexId(VertexType vex);
 private:
     int numVertex;
     int numEdge;
     VertexType* vexs;
+	std::unordered_map<VertexType, int> vex2idx;
     EdgeType** arc;
     bool* visited;
 
@@ -33,8 +36,11 @@ AdjMatrixGraph::AdjMatrixGraph(int v) : numVertex(v), numEdge(0)
 
     vexs = new VertexType[v];
     std::cout << "Input the information for each vertex: " << std::endl;
-    for (int i = 0; i < v; i++)
-        std::cin >> vexs[i];
+	for (int i = 0; i < v; i++)
+	{
+		std::cin >> vexs[i];
+		vex2idx[vexs[i]] = i;
+	}
 }
 
 AdjMatrixGraph::~AdjMatrixGraph()
@@ -55,6 +61,11 @@ int AdjMatrixGraph::addEdge(int i, int j)
     arc[j][i] = 1;
     numEdge++;
     return 0;
+}
+
+int AdjMatrixGraph::getVertexId(VertexType vex)
+{
+	return vex2idx[vex];
 }
 
 void AdjMatrixGraph::DFSTraverse()

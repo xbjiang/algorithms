@@ -65,10 +65,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="adj_matrix_graph.hpp" />
     <ClInclude Include="graph.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFS.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
