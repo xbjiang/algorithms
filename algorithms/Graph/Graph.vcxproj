@@ -66,7 +66,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="adj_matrix_graph.hpp" />
-    <ClInclude Include="graph.h" />
+    <ClInclude Include="adj_list_graph.hpp" />
+    <ClInclude Include="Graph.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFS.cpp" />

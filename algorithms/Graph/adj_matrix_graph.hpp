@@ -1,3 +1,4 @@
+#include "Graph.h"
 #include <iostream>
 #include <assert.h>
 #include <unordered_map>
@@ -5,16 +6,14 @@
 #ifndef ADJ_MATRIX_GRAPH_HPP
 #define ADJ_MATRIX_GRAPH_HPP
 
-class AdjMatrixGraph
+class AdjMatrixGraph : public Graph
 {
 public:
-    typedef char VertexType;
-    typedef int EdgeType;
     AdjMatrixGraph(int v);
-    ~AdjMatrixGraph();
-    int addEdge(int i, int j);
-    void DFSTraverse();
-	int getVertexId(VertexType vex);
+    virtual ~AdjMatrixGraph() override;
+    virtual int addEdge(int i, int j, EdgeType w = 1) override;
+    virtual void DFSTraverse() override;
+	virtual int getVertexId(VertexType vex) override;
 private:
     int numVertex;
     int numEdge;
@@ -52,13 +51,13 @@ AdjMatrixGraph::~AdjMatrixGraph()
     delete[] visited;
 }
 
-int AdjMatrixGraph::addEdge(int i, int j)
+int AdjMatrixGraph::addEdge(int i, int j, EdgeType w)
 {
     assert(i >= 0 && i < numVertex);
     assert(j >= 0 && j < numVertex);
     if (arc[i][j] == 1) return 1;
     arc[i][j] = 1;
-    arc[j][i] = 1;
+    arc[j][i] = 1; // this is for undirected graph
     numEdge++;
     return 0;
 }

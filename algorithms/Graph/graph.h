@@ -1,32 +1,16 @@
-
 #ifndef GRAPH_H
 #define GRAPH_H
 
-typedef char VertexType;
-typedef int EdgeType;
-
-#define MAXVEX 100
-
-// for adjacency matrix
-struct MGraph
+class Graph
 {
-	VertexType vexs[MAXVEX];
-	EdgeType arc[MAXVEX][MAXVEX];
-	int numVertexes, numEdges;
+public:
+    typedef char VertexType;
+    typedef int EdgeType;
+
+    Graph() {}
+    virtual ~Graph() {}
+    virtual int addEdge(int i, int j, EdgeType w = 1) = 0;
+    virtual int getVertexId(VertexType name) = 0;
+    virtual void DFSTraverse() = 0;
 };
-
-// for adjacency list
-typedef struct EdgeNode
-{
-	int adjvex; // index for this Vertex
-	EdgeType weight;
-	struct EdgeNode* next;
-} EdgeNode;
-
-typedef struct VertexNode 
-{
-	VertexType data;
-	EdgeNode* firstedge;
-} VertexNode, AdjList[MAXVEX];
-
 #endif
