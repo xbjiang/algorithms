@@ -31,7 +31,7 @@ public:
     virtual int addEdge(int i, int j, EdgeType w = 1) override;
     virtual int getVertexId(VertexType) override;
     virtual void DFSTraverse() override;
-
+    virtual void BFSTraverse() override;
 private:
     int numVertex;
     int numEdge;
@@ -110,4 +110,8 @@ void AdjListGraph::DFS(int i)
     }
 }
 
+void AdjListGraph::BFSTraverse()
+{
+
+}
 #endif

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <assert.h>
 #include <unordered_map>
+#include <queue>
+#include <algorithm>
 
 #ifndef ADJ_MATRIX_GRAPH_HPP
 #define ADJ_MATRIX_GRAPH_HPP
@@ -14,6 +16,7 @@ public:
     virtual int addEdge(int i, int j, EdgeType w = 1) override;
     virtual void DFSTraverse() override;
 	virtual int getVertexId(VertexType vex) override;
+    virtual void BFSTraverse() override;
 private:
     int numVertex;
     int numEdge;
@@ -21,6 +24,7 @@ private:
 	std::unordered_map<VertexType, int> vex2idx;
     EdgeType** arc;
     bool* visited;
+    std::queue<int> Q;
 
     void DFS(int i);
 };
@@ -37,6 +41,7 @@ AdjMatrixGraph::AdjMatrixGraph(int v) : numVertex(v), numEdge(0)
     std::cout << "Input the information for each vertex: " << std::endl;
 	for (int i = 0; i < v; i++)
 	{
+        std::cout << "Vertex " << i << ": ";
 		std::cin >> vexs[i];
 		vex2idx[vexs[i]] = i;
 	}
@@ -84,5 +89,37 @@ void AdjMatrixGraph::DFS(int i)
     for (int j = 0; j < numVertex; j++)
         if (arc[i][j] == 1 && !visited[j])
             DFS(j);
+}
+
+void AdjMatrixGraph::BFSTraverse()
+{
+    std::fill(visited, visited+numVertex, false);
+    for (int i = 0; i < numVertex; i++)
+    {
+        if (!visited[i])
+        {
+            // One vertex is found when it is enqueued. And, at this time, it is only found and enqueued, not visited.
+            // bool* visited for BFS doesn't need to be global. It can be a local array or set to record the found vertex.
+            Q.push(i);
+            visited[i] = true; 
+            
+            while (!Q.empty())
+            {
+                int found = Q.front();
+                std::cout << vexs[found] << " "; // This is actually when one vertex is visited.
+                Q.pop();
+
+                for (int j = 0; j < numVertex; j++)
+                {
+                    if (arc[found][j] == 1 && !visited[j])
+                    {
+                        Q.push(j); // One vertex is found when it is enqueued.
+                        visited[j] = true;
+                    }
+                }
+            }
+        }
+    }
+    std::cout << std::endl;
 }
 #endif ADJ_MATRIX_GRAPH_HPP

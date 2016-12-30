@@ -12,5 +12,6 @@ public:
     virtual int addEdge(int i, int j, EdgeType w = 1) = 0;
     virtual int getVertexId(VertexType name) = 0;
     virtual void DFSTraverse() = 0;
+    virtual void BFSTraverse() = 0;
 };
 #endif
