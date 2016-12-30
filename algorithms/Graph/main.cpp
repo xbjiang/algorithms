@@ -24,6 +24,7 @@ void test(Graph& g, int numEdge)
 void test_with_fixed_graphs()
 {
     Graph& g = AdjMatrixGraph(9);
+	//Graph& g = AdjListGraph(9);
     g.addEdge(0, 1);
     g.addEdge(0, 5);
     g.addEdge(1, 2);

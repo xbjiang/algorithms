@@ -112,6 +112,35 @@ void AdjListGraph::DFS(int i)
 
 void AdjListGraph::BFSTraverse()
 {
+	std::queue<int> Q;
+	std::fill(visited.begin(), visited.end(), false);
+	for (int i = 0; i < numVertex; i++)
+	{
+		if (!visited[i])
+		{
+			Q.push(i);
+			visited[i] = true;
 
+			while (!Q.empty())
+			{
+				int found = Q.front();
+				std::cout << adjList[found].name << " ";
+				Q.pop();
+
+				std::list<EdgeNode>& elf = adjList[found].edgeList;
+				std::list<EdgeNode>::iterator iter = elf.begin();
+				while (iter != elf.end())
+				{
+					if (!visited[iter->adjvexid])
+					{
+						visited[iter->adjvexid] = true;
+						Q.push(iter->adjvexid);
+					}
+					iter++;
+				}
+			}
+		}
+	}
+	std::cout << std::endl;
 }
 #endif
