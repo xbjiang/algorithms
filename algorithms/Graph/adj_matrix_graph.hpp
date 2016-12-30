@@ -24,7 +24,6 @@ private:
 	std::unordered_map<VertexType, int> vex2idx;
     EdgeType** arc;
     bool* visited;
-    std::queue<int> Q;
 
     void DFS(int i);
 };
@@ -93,6 +92,7 @@ void AdjMatrixGraph::DFS(int i)
 
 void AdjMatrixGraph::BFSTraverse()
 {
+	std::queue<int> Q;
     std::fill(visited, visited+numVertex, false);
     for (int i = 0; i < numVertex; i++)
     {
