@@ -6,8 +6,8 @@
 #include <assert.h>
 #include <algorithm>
 
-#ifndef ADJ_LIST_GRAPH_HPP
-#define ADJ_LIST_GRAPH_HPP
+#ifndef __ADJ_LIST_GRAPH_HPP__
+#define __ADJ_LIST_GRAPH_HPP__
 
 class AdjListGraph : public Graph
 {
@@ -32,6 +32,7 @@ public:
     virtual int getVertexId(VertexType) override;
     virtual void DFSTraverse() override;
     virtual void BFSTraverse() override;
+    virtual void Prim() override;
 private:
     int numVertex;
     int numEdge;
@@ -142,5 +143,50 @@ void AdjListGraph::BFSTraverse()
 		}
 	}
 	std::cout << std::endl;
+}
+
+void AdjListGraph::Prim()
+{
+    std::vector<int> adjvex(numVertex, 0);
+    std::vector<EdgeType> lowcost(numVertex, INF);
+    lowcost[0] = 0;
+    std::list<EdgeNode>& el = adjList[0].edgeList;
+    std::list<EdgeNode>::iterator iter = el.begin();
+    while (iter != el.end())
+    {
+        lowcost[iter->adjvexid] = iter->weight;
+        iter++;
+    }
+
+    for (int i = 1; i < numVertex; i++)
+    {
+        EdgeType min_cost = INF;
+        int min_idx;
+        
+        for (int j = 1; j < numVertex; j++)
+        {
+            if (lowcost[j] != 0 && lowcost[j] < min_cost)
+            {
+                min_cost = lowcost[j];
+                min_idx = j;
+            }
+        }
+        lowcost[min_idx] = 0;
+        std::cout << adjvex[min_idx] << " "
+            << min_idx << std::endl;
+
+        std::list<EdgeNode>& el = adjList[min_idx].edgeList;
+        std::list<EdgeNode>::iterator iter = el.begin();
+        while (iter != el.end())
+        {
+            int id = iter->adjvexid;
+            if (lowcost[id] != 0 && iter->weight < lowcost[id])
+            {
+                lowcost[id] = iter->weight;
+                adjvex[id] = min_idx;
+            }
+            iter++;
+        }
+    }
 }
 #endif

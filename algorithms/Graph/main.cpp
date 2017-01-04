@@ -23,26 +23,27 @@ void test(Graph& g, int numEdge)
 
 void test_with_fixed_graphs()
 {
-    Graph& g = AdjMatrixGraph(9);
-	//Graph& g = AdjListGraph(9);
-    g.addEdge(0, 1);
-    g.addEdge(0, 5);
-    g.addEdge(1, 2);
-    g.addEdge(1, 8);
-    g.addEdge(1, 6);
-    g.addEdge(5, 6);
-    g.addEdge(2, 8);
-    g.addEdge(2, 3);
-    g.addEdge(3, 8);
-    g.addEdge(3, 6);
-    g.addEdge(6, 7);
-    g.addEdge(4, 5);
-    g.addEdge(3, 7);
-    g.addEdge(3, 4);
-    g.addEdge(4, 7);
+    //Graph& g = AdjMatrixGraph(9);
+	Graph& g = AdjListGraph(9);
+    g.addEdge(0, 1, 10);
+    g.addEdge(0, 5, 11);
+    g.addEdge(1, 2, 18);
+    g.addEdge(1, 8, 12);
+    g.addEdge(1, 6, 16);
+    g.addEdge(5, 6, 17);
+    g.addEdge(2, 8, 8);
+    g.addEdge(2, 3, 22);
+    g.addEdge(3, 8, 21);
+    g.addEdge(3, 6, 24);
+    g.addEdge(6, 7, 19);
+    g.addEdge(4, 5, 26);
+    g.addEdge(3, 7, 16);
+    g.addEdge(3, 4, 20);
+    g.addEdge(4, 7, 7);
     
     g.DFSTraverse();
     g.BFSTraverse();
+    g.Prim();
 }
 
 int main()

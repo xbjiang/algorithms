@@ -5,18 +5,21 @@
 #include <queue>
 #include <algorithm>
 
-#ifndef ADJ_MATRIX_GRAPH_HPP
-#define ADJ_MATRIX_GRAPH_HPP
+#ifndef __ADJ_MATRIX_GRAPH_HPP__
+#define __ADJ_MATRIX_GRAPH_HPP__
 
 class AdjMatrixGraph : public Graph
 {
 public:
     AdjMatrixGraph(int v);
+    AdjMatrixGraph(const AdjMatrixGraph&) = delete;
+    AdjMatrixGraph& operator=(const AdjMatrixGraph&) = delete;
     virtual ~AdjMatrixGraph() override;
     virtual int addEdge(int i, int j, EdgeType w = 1) override;
     virtual void DFSTraverse() override;
 	virtual int getVertexId(VertexType vex) override;
     virtual void BFSTraverse() override;
+    virtual void Prim() override;
 private:
     int numVertex;
     int numEdge;
@@ -33,7 +36,16 @@ AdjMatrixGraph::AdjMatrixGraph(int v) : numVertex(v), numEdge(0)
     arc = new EdgeType*[v];
     for (int i = 0; i < v; i++)
         arc[i] = new EdgeType[v]();
-
+    for (int i = 0; i < v; i++)
+    {
+        for (int j = 0; j < v; j++)
+        {
+            if (i == j)
+                arc[i][j] = 0;
+            else
+                arc[i][j] = INF;
+        }
+    }
     visited = new bool[v]();
 
     vexs = new VertexType[v];
@@ -59,9 +71,9 @@ int AdjMatrixGraph::addEdge(int i, int j, EdgeType w)
 {
     assert(i >= 0 && i < numVertex);
     assert(j >= 0 && j < numVertex);
-    if (arc[i][j] == 1) return 1;
-    arc[i][j] = 1;
-    arc[j][i] = 1; // this is for undirected graph
+    if (arc[i][j] > 0 && arc[i][j] < INF) return 1;
+    arc[i][j] = w;
+    arc[j][i] = w; // this is for undirected graph
     numEdge++;
     return 0;
 }
@@ -86,7 +98,8 @@ void AdjMatrixGraph::DFS(int i)
     visited[i] = true;
     std::cout << vexs[i] << " ";
     for (int j = 0; j < numVertex; j++)
-        if (arc[i][j] == 1 && !visited[j])
+        if (!visited[j] &&
+            arc[i][j] > 0 && arc[i][j] < INF)
             DFS(j);
 }
 
@@ -111,7 +124,7 @@ void AdjMatrixGraph::BFSTraverse()
 
                 for (int j = 0; j < numVertex; j++)
                 {
-                    if (arc[found][j] == 1 && !visited[j])
+                    if (arc[found][j] > 0 && arc[found][j] < INF && !visited[j])
                     {
                         Q.push(j); // One vertex is found when it is enqueued.
                         visited[j] = true;
@@ -122,4 +135,39 @@ void AdjMatrixGraph::BFSTraverse()
     }
     std::cout << std::endl;
 }
-#endif ADJ_MATRIX_GRAPH_HPP
+
+void AdjMatrixGraph::Prim()
+{
+    std::vector<int> adjvex(numVertex, 0);
+    std::vector<EdgeType> lowcost(numVertex, 0);
+
+    for (int i = 1; i < numVertex; i++)
+        lowcost[i] = arc[0][i];
+
+    for (int i = 1; i < numVertex; i++)
+    {
+        EdgeType min_cost = INF;
+        int min_idx;
+        for (int j = 1; j < numVertex; j++)
+        {
+            if (lowcost[j] != 0 && lowcost[j] < min_cost)
+            {
+                min_cost = lowcost[j];
+                min_idx = j;
+            }
+        }
+        std::cout << adjvex[min_idx] << " "
+            << min_idx << std::endl;
+        lowcost[min_idx] = 0;
+
+        for (int j = 1; j < numVertex; j++)
+        {
+            if (lowcost[j] != 0 && arc[min_idx][j] < lowcost[j])
+            {
+                lowcost[j] = arc[min_idx][j];
+                adjvex[j] = min_idx;
+            }
+        }
+    }
+}
+#endif __ADJ_MATRIX_GRAPH_HPP__
