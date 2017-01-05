@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <assert.h>
 #include <algorithm>
+#include <stdio.h>
 
 #ifndef __ADJ_LIST_GRAPH_HPP__
 #define __ADJ_LIST_GRAPH_HPP__
@@ -33,6 +34,7 @@ public:
     virtual void DFSTraverse() override;
     virtual void BFSTraverse() override;
     virtual void Prim() override;
+    virtual void Krustal() override;
 private:
     int numVertex;
     int numEdge;
@@ -42,6 +44,7 @@ private:
     std::vector<bool> visited;
 
     void DFS(int i);
+    int Find(std::vector<int>& parent, int f);
 };
 
 AdjListGraph::AdjListGraph(int v) : numVertex(v), numEdge(0)
@@ -188,5 +191,45 @@ void AdjListGraph::Prim()
             iter++;
         }
     }
+}
+
+void AdjListGraph::Krustal()
+{
+    std::vector<int> parent(numVertex, 0);
+    std::vector<Edge> edges;
+    for (int i = 0; i < numVertex - 1; i++)
+    {
+        for (auto& node : adjList[i].edgeList)
+        {
+            if (node.adjvexid <= i)
+                continue;
+            if (node.weight > 0 && node.weight < INF)
+                // edges.push_back(Edge(i, node.adjvexid, node.weight));
+                edges.emplace_back(i, node.adjvexid, node.weight);
+        }
+    }
+
+    assert(edges.size() == numEdge);
+
+    std::sort(edges.begin(), edges.end(), [](Edge e1, Edge e2) { return e1.weight < e2.weight; });
+
+    for (int i = 0; i < numEdge; i++)
+    {
+        int n = Find(parent, edges[i].begin);
+        int m = Find(parent, edges[i].end);
+
+        if (n != m)
+        {
+            parent[n] = m;
+            printf("(%d, %d) %d\n", edges[i].begin, edges[i].end, edges[i].weight);
+        }
+    }
+}
+
+int AdjListGraph::Find(std::vector<int>& parent, int f)
+{
+    while (parent[f] != 0)
+        f = parent[f];
+    return f;
 }
 #endif

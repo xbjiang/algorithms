@@ -44,6 +44,7 @@ void test_with_fixed_graphs()
     g.DFSTraverse();
     g.BFSTraverse();
     g.Prim();
+    g.Krustal();
 }
 
 int main()

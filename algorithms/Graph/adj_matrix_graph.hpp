@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include <iostream>
+#include <stdio.h>
 #include <assert.h>
 #include <unordered_map>
 #include <queue>
@@ -20,6 +21,7 @@ public:
 	virtual int getVertexId(VertexType vex) override;
     virtual void BFSTraverse() override;
     virtual void Prim() override;
+    virtual void Krustal() override;
 private:
     int numVertex;
     int numEdge;
@@ -29,6 +31,7 @@ private:
     bool* visited;
 
     void DFS(int i);
+    int Find(std::vector<int>& parent, int f);
 };
 
 AdjMatrixGraph::AdjMatrixGraph(int v) : numVertex(v), numEdge(0)
@@ -169,5 +172,43 @@ void AdjMatrixGraph::Prim()
             }
         }
     }
+}
+
+void AdjMatrixGraph::Krustal()
+{
+    std::vector<int> parent(numVertex, 0);
+    std::vector<Edge> edges;
+    for (int i = 0; i < numVertex - 1; i++)
+    {
+        for (int j = i + 1; j < numVertex; j++)
+        {
+            if (arc[i][j] > 0 && arc[i][j] < INF)
+                // edges.push_back(Edge(i, j, arc[i][j]));
+                edges.emplace_back(i, j, arc[i][j]);
+        }
+    }
+
+    assert(edges.size() == numEdge);
+
+    std::sort(edges.begin(), edges.end(), [](Edge e1, Edge e2) { return e1.weight < e2.weight; });
+
+    for (int i = 0; i < numEdge; i++)
+    {
+        int n = Find(parent, edges[i].begin);
+        int m = Find(parent, edges[i].end);
+
+        if (n != m)
+        {
+            parent[n] = m;
+            printf("(%d, %d) %d\n", edges[i].begin, edges[i].end, edges[i].weight);
+        }
+    }
+}
+
+int AdjMatrixGraph::Find(std::vector<int>& parent, int f)
+{
+    while (parent[f] != 0)
+        f = parent[f];
+    return f;
 }
 #endif __ADJ_MATRIX_GRAPH_HPP__

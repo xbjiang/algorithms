@@ -10,6 +10,14 @@ class Graph
 public:
     typedef std::string VertexType;
     typedef int EdgeType;
+    struct Edge
+    {
+        int begin;
+        int end;
+        EdgeType weight;
+        Edge(int b, int e, EdgeType w) : 
+            begin(b), end(e), weight(w) {}
+    };
 
     Graph() {}
     virtual ~Graph() {}
@@ -18,5 +26,6 @@ public:
     virtual void DFSTraverse() = 0;
     virtual void BFSTraverse() = 0;
     virtual void Prim() = 0;
+    virtual void Krustal() = 0;
 };
 #endif
