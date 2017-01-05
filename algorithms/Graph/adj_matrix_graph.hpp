@@ -31,7 +31,7 @@ private:
     bool* visited;
 
     void DFS(int i);
-    int Find(std::vector<int>& parent, int f);
+    int Find(const std::vector<int>& parent, int f);
 };
 
 AdjMatrixGraph::AdjMatrixGraph(int v) : numVertex(v), numEdge(0)
@@ -205,7 +205,7 @@ void AdjMatrixGraph::Krustal()
     }
 }
 
-int AdjMatrixGraph::Find(std::vector<int>& parent, int f)
+int AdjMatrixGraph::Find(const std::vector<int>& parent, int f)
 {
     while (parent[f] != 0)
         f = parent[f];

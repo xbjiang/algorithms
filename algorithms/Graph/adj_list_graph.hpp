@@ -44,7 +44,7 @@ private:
     std::vector<bool> visited;
 
     void DFS(int i);
-    int Find(std::vector<int>& parent, int f);
+    int Find(const std::vector<int>& parent, int f);
 };
 
 AdjListGraph::AdjListGraph(int v) : numVertex(v), numEdge(0)
@@ -226,7 +226,7 @@ void AdjListGraph::Krustal()
     }
 }
 
-int AdjListGraph::Find(std::vector<int>& parent, int f)
+int AdjListGraph::Find(const std::vector<int>& parent, int f)
 {
     while (parent[f] != 0)
         f = parent[f];
