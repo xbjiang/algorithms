@@ -12,7 +12,7 @@
 class AdjMatrixGraph : public Graph
 {
 public:
-    AdjMatrixGraph(int v);
+    explicit AdjMatrixGraph(int v);
     AdjMatrixGraph(const AdjMatrixGraph&) = delete;
     AdjMatrixGraph& operator=(const AdjMatrixGraph&) = delete;
     virtual ~AdjMatrixGraph() override;

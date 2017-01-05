@@ -27,7 +27,7 @@ public:
         VertexNode(VertexType n) : name(n) {}
     };
 
-    AdjListGraph(int v);
+    explicit AdjListGraph(int v);
     virtual ~AdjListGraph() override;
     virtual int addEdge(int i, int j, EdgeType w = 1) override;
     virtual int getVertexId(VertexType) override;
