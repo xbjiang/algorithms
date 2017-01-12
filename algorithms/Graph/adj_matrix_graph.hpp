@@ -22,6 +22,7 @@ public:
     virtual void BFSTraverse() override;
     virtual void Prim() override;
     virtual void Krustal() override;
+    virtual void Dijkstra(int vbegin, int vend) override;
 private:
     int numVertex;
     int numEdge;
@@ -29,9 +30,12 @@ private:
 	std::unordered_map<VertexType, int> vex2idx;
     EdgeType** arc;
     bool* visited;
+    PathMatrix pathMat; // store the index of precursor vertex for each node
+    ShortestPathTable spTable; // store the total weight of shortest path
 
     void DFS(int i);
     int Find(const std::vector<int>& parent, int f);
+    void Dijkstra();
 };
 
 AdjMatrixGraph::AdjMatrixGraph(int v) : numVertex(v), numEdge(0)
@@ -210,5 +214,41 @@ int AdjMatrixGraph::Find(const std::vector<int>& parent, int f)
     while (parent[f] != 0)
         f = parent[f];
     return f;
+}
+
+void AdjMatrixGraph::Dijkstra(int vbegin, int vend)
+{
+
+}
+
+void AdjMatrixGraph::Dijkstra()
+{
+    pathMat.resize(numVertex, std::vector<int>(numVertex, 0));
+    spTable.resize(numVertex, std::vector<EdgeType>(numVertex, 0));
+
+    for (int vbegin = 0; vbegin < numVertex; ++vbegin)
+    {
+        std::vector<int>& pathVec = pathMat[vbegin];   // precursor vertex
+        std::vector<EdgeType>& spVec = spTable[vbegin]; // shortest path
+        std::vector<bool> final(numVertex, false);
+
+        for (int i = 0; i < numVertex; ++i)
+        {
+            spVec[i] = arc[vbegin][i];
+        }
+
+        EdgeType min = INF;
+        int min_idx;
+        for (int i = 0; i < numVertex; ++i)
+        {
+            if (!final[i] && spVec[i] < min)
+            {
+                min = spVec[i];
+                min_idx = i;
+            }
+        }
+
+        final[min_idx] = true;
+    }
 }
 #endif __ADJ_MATRIX_GRAPH_HPP__
