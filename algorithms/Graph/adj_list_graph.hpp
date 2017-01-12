@@ -35,6 +35,7 @@ public:
     virtual void BFSTraverse() override;
     virtual void Prim() override;
     virtual void Krustal() override;
+	virtual void Dijkstra(int vbegin, int vend) override;
 private:
     int numVertex;
     int numEdge;
@@ -231,5 +232,9 @@ int AdjListGraph::Find(const std::vector<int>& parent, int f)
     while (parent[f] != 0)
         f = parent[f];
     return f;
+}
+
+void AdjListGraph::Dijkstra(int vbegin, int vend)
+{
 }
 #endif

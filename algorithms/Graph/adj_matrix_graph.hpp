@@ -218,7 +218,23 @@ int AdjMatrixGraph::Find(const std::vector<int>& parent, int f)
 
 void AdjMatrixGraph::Dijkstra(int vbegin, int vend)
 {
+	if (pathMat.empty())
+		Dijkstra();
+	std::vector<int> path;
+	int passing = vend;
 
+	path.push_back(passing);
+	while (passing != vbegin)
+	{
+		passing = pathMat[vbegin][passing];
+		path.push_back(passing);
+	}
+
+	std::cout << "Shortest Path: ";
+	for (int i = path.size() - 1; i >= 0; --i)
+		std::cout << vexs[path[i]] << " ";
+	std::cout << std::endl;
+	std::cout << "Total weight: " << spTable[vbegin][vend] << std::endl;
 }
 
 void AdjMatrixGraph::Dijkstra()
@@ -236,19 +252,32 @@ void AdjMatrixGraph::Dijkstra()
         {
             spVec[i] = arc[vbegin][i];
         }
+		final[vbegin] = true;
 
-        EdgeType min = INF;
-        int min_idx;
-        for (int i = 0; i < numVertex; ++i)
-        {
-            if (!final[i] && spVec[i] < min)
-            {
-                min = spVec[i];
-                min_idx = i;
-            }
-        }
+		for (int i = 1; i < numVertex; ++i)
+		{
+			EdgeType min = INF;
+			int min_idx;
+			for (int j = 0; j < numVertex; ++j)
+			{
+				if (!final[j] && spVec[j] < min)
+				{
+					min = spVec[j];
+					min_idx = j;
+				}
+			}
 
-        final[min_idx] = true;
+			final[min_idx] = true;
+
+			for (int k = 0; k < numVertex; ++k)
+			{
+				if (!final[k] && (min + arc[min_idx][k] < spVec[k]))
+				{
+					spVec[k] = min + arc[min_idx][k];
+					pathVec[k] = min_idx;
+				}
+			}
+		}
     }
 }
 #endif __ADJ_MATRIX_GRAPH_HPP__
