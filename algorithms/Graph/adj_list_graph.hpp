@@ -44,8 +44,12 @@ private:
     std::unordered_map<VertexType, int> vex2idx;
     std::vector<bool> visited;
 
+    PathMatrix pathMat;
+    ShortestPathTable spTable;
+
     void DFS(int i);
     int Find(const std::vector<int>& parent, int f);
+    void Dijkstra();
 };
 
 AdjListGraph::AdjListGraph(int v) : numVertex(v), numEdge(0)
@@ -236,5 +240,69 @@ int AdjListGraph::Find(const std::vector<int>& parent, int f)
 
 void AdjListGraph::Dijkstra(int vbegin, int vend)
 {
+    if (pathMat.empty())
+        Dijkstra();
+    std::vector<int> path;
+    int passing = vend;
+    
+    path.push_back(passing);
+    while (passing != vbegin)
+    {
+        passing = pathMat[vbegin][passing];
+        path.push_back(passing);
+    }
+    
+    std::cout << "Shortest Path: ";
+    for (int i = path.size() - 1; i >= 0; --i)
+        std::cout << adjList[path[i]].name << " ";
+    std::cout << std::endl;
+
+    std::cout << "Total weight: " 
+              << spTable[vbegin][vend]
+              << std::endl;
+}
+
+void AdjListGraph::Dijkstra()
+{
+    pathMat.resize(numVertex, std::vector<int>(numVertex, 0));
+    spTable.resize(numVertex, std::vector<EdgeType>(numVertex, 0));
+
+    for (int vbegin = 0; vbegin < numVertex; vbegin++)
+    {
+        std::vector<int>& pathVec = pathMat[vbegin];
+        std::vector<EdgeType>& spVec = spTable[vbegin];
+        std::vector<bool> final(numVertex, false);
+
+        std::fill(spVec.begin(), spVec.end(), INF);
+        final[vbegin] = true;
+        std::list<EdgeNode>& elb = adjList[vbegin].edgeList; 
+        for (auto& node : elb)
+            spVec[node.adjvexid] = node.weight;
+
+        for (int i = 1; i < numVertex; i++)
+        {
+            EdgeType min = INF;
+            int min_idx; 
+            for (int j = 0; j < numVertex; j++)
+            {
+                if (!final[j] && spVec[j] < min)
+                {
+                    min = spVec[j];
+                    min_idx = j;
+                }
+            }
+            final[min_idx] = true;
+
+            std::list<EdgeNode>& elmin = adjList[min_idx].edgeList;
+            for (auto& node : elmin)
+            {
+                if (!final[node.adjvexid] && (min + node.weight < spVec[node.adjvexid]))
+                {
+                    spVec[node.adjvexid] = min + node.weight;
+                    pathVec[node.adjvexid] = min_idx;
+                }
+            }
+        }
+    }
 }
 #endif

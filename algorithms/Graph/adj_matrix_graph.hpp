@@ -234,7 +234,9 @@ void AdjMatrixGraph::Dijkstra(int vbegin, int vend)
 	for (int i = path.size() - 1; i >= 0; --i)
 		std::cout << vexs[path[i]] << " ";
 	std::cout << std::endl;
-	std::cout << "Total weight: " << spTable[vbegin][vend] << std::endl;
+	std::cout << "Total weight: " 
+              << spTable[vbegin][vend] 
+              << std::endl;
 }
 
 void AdjMatrixGraph::Dijkstra()
