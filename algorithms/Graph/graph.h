@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#define INF 65536
+#define INF 65535
 
 class Graph
 {
@@ -31,5 +31,7 @@ public:
     virtual void Prim() = 0;
     virtual void Krustal() = 0;
     virtual void Dijkstra(int vbegin, int vend) = 0;
+    virtual void clear() = 0;
+    virtual void Floyd(int vbegin, int vend) = 0;
 };
 #endif

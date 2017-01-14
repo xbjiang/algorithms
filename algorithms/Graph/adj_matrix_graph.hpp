@@ -23,6 +23,8 @@ public:
     virtual void Prim() override;
     virtual void Krustal() override;
     virtual void Dijkstra(int vbegin, int vend) override;
+    virtual void clear() override;
+    virtual void Floyd(int vbegin, int vend) override;
 private:
     int numVertex;
     int numEdge;
@@ -36,6 +38,7 @@ private:
     void DFS(int i);
     int Find(const std::vector<int>& parent, int f);
     void Dijkstra();
+    void Floyd();
 };
 
 AdjMatrixGraph::AdjMatrixGraph(int v) : numVertex(v), numEdge(0)
@@ -220,23 +223,24 @@ void AdjMatrixGraph::Dijkstra(int vbegin, int vend)
 {
 	if (pathMat.empty())
 		Dijkstra();
-	std::vector<int> path;
-	int passing = vend;
+    
+    std::vector<int> path;
+    int passing = vend;
 
-	path.push_back(passing);
-	while (passing != vbegin)
-	{
-		passing = pathMat[vbegin][passing];
-		path.push_back(passing);
-	}
+    path.push_back(passing);
+    while (passing != vbegin)
+    {
+        passing = pathMat[vbegin][passing];
+        path.push_back(passing);
+    }
 
-	std::cout << "Shortest Path: ";
-	for (int i = path.size() - 1; i >= 0; --i)
-		std::cout << vexs[path[i]] << " ";
-	std::cout << std::endl;
-	std::cout << "Total weight: " 
-              << spTable[vbegin][vend] 
-              << std::endl;
+    std::cout << "Shortest Path: ";
+    for (int i = path.size() - 1; i >= 0; --i)
+        std::cout << vexs[path[i]] << " ";
+    std::cout << std::endl;
+    std::cout << "Total weight: "
+        << spTable[vbegin][vend]
+        << std::endl;
 }
 
 void AdjMatrixGraph::Dijkstra()
@@ -280,6 +284,61 @@ void AdjMatrixGraph::Dijkstra()
 				}
 			}
 		}
+    }
+}
+
+void AdjMatrixGraph::clear()
+{
+    pathMat.clear();
+    spTable.clear();
+}
+
+void AdjMatrixGraph::Floyd(int vbegin, int vend)
+{
+    if (pathMat.empty())
+        Floyd();
+
+    std::cout << "Shortest Path: " 
+            << vexs[vbegin] << " ";
+    int passing = vbegin;
+    while (passing != vend)
+    {
+        passing = pathMat[passing][vend];
+        std::cout << vexs[passing] << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Total weight: "
+        << spTable[vbegin][vend]
+        << std::endl;
+}
+
+void AdjMatrixGraph::Floyd()
+{
+    pathMat.resize(numVertex, std::vector<int>(numVertex, 0));
+    spTable.resize(numVertex, std::vector<EdgeType>(numVertex, 0));
+
+    for (int v = 0; v < numVertex; v++)
+    {
+        for (int w = 0; w < numVertex; w++)
+        {
+            pathMat[v][w] = w;
+            spTable[v][w] = arc[v][w];
+        }
+    }
+
+    for (int k = 0; k < numVertex; k++)
+    {
+        for (int v = 0; v < numVertex; v++)
+        {
+            for (int w = 0; w < numVertex; w++)
+            {
+                if (spTable[v][k] + spTable[k][w] < spTable[v][w])
+                {
+                    spTable[v][w] = spTable[v][k] + spTable[k][w];
+                    pathMat[v][w] = pathMat[v][k];
+                }
+            }
+        }
     }
 }
 #endif __ADJ_MATRIX_GRAPH_HPP__

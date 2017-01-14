@@ -36,6 +36,8 @@ public:
     virtual void Prim() override;
     virtual void Krustal() override;
 	virtual void Dijkstra(int vbegin, int vend) override;
+    virtual void clear() override;
+    virtual void Floyd(int vbegin, int vend) override;
 private:
     int numVertex;
     int numEdge;
@@ -50,6 +52,7 @@ private:
     void DFS(int i);
     int Find(const std::vector<int>& parent, int f);
     void Dijkstra();
+    void Floyd();
 };
 
 AdjListGraph::AdjListGraph(int v) : numVertex(v), numEdge(0)
@@ -274,6 +277,7 @@ void AdjListGraph::Dijkstra()
         std::vector<bool> final(numVertex, false);
 
         std::fill(spVec.begin(), spVec.end(), INF);
+        spVec[vbegin] = 0;
         final[vbegin] = true;
         std::list<EdgeNode>& elb = adjList[vbegin].edgeList; 
         for (auto& node : elb)
@@ -304,5 +308,13 @@ void AdjListGraph::Dijkstra()
             }
         }
     }
+}
+
+void AdjListGraph::clear()
+{
+}
+ 
+void AdjListGraph::Floyd(int vbegin, int vend)
+{
 }
 #endif

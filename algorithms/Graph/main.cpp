@@ -23,8 +23,8 @@ void test(Graph& g, int numEdge)
 
 void test_with_fixed_graphs()
 {
-    //Graph& g = AdjMatrixGraph(9);
-	Graph& g = AdjListGraph(9);
+    Graph& g = AdjMatrixGraph(9);
+	//Graph& g = AdjListGraph(9);
     g.addEdge(0, 1, 10);
     g.addEdge(0, 5, 11);
     g.addEdge(1, 2, 18);
@@ -53,6 +53,16 @@ void test_with_fixed_graphs()
 	g.Dijkstra(0, 6);
 	g.Dijkstra(0, 7);
 	g.Dijkstra(0, 8);
+    g.clear();
+    std::cout << std::endl;
+    g.Floyd(0, 1);
+    g.Floyd(0, 2);
+    g.Floyd(0, 3);
+    g.Floyd(0, 4);
+    g.Floyd(0, 5);
+    g.Floyd(0, 6);
+    g.Floyd(0, 7);
+    g.Floyd(0, 8);
 }
 
 int main()
