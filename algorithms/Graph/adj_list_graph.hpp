@@ -312,9 +312,61 @@ void AdjListGraph::Dijkstra()
 
 void AdjListGraph::clear()
 {
+    pathMat.clear();
+    spTable.clear();
 }
  
 void AdjListGraph::Floyd(int vbegin, int vend)
 {
+    if (pathMat.empty())
+        Floyd();
+
+    std::cout << "Shortest Path: "
+        << adjList[vbegin].name << " ";
+    int passing = vbegin;
+    while (passing != vend)
+    {
+        passing = pathMat[passing][vend];
+        std::cout << adjList[passing].name << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Total weight: "
+        << spTable[vbegin][vend]
+        << std::endl;
+}
+
+void AdjListGraph::Floyd()
+{
+    pathMat.resize(numVertex, std::vector<int>(numVertex, 0));
+    spTable.resize(numVertex, std::vector<EdgeType>(numVertex, INF));
+    for (int i = 0; i < numVertex; i++)
+    {
+        for (int j = 0; j < numVertex; j++)
+            pathMat[i][j] = j;
+
+        spTable[i][i] = 0;
+        std::list<EdgeNode>& eli = adjList[i].edgeList;
+        std::list<EdgeNode>::iterator it = eli.begin();
+        while (it != eli.end())
+        {
+            spTable[i][it->adjvexid] = it->weight;
+            it++;
+        }
+    }
+
+    for (int k = 0; k < numVertex; k++)
+    {
+        for (int v = 0; v < numVertex; v++)
+        {
+            for (int w = 0; w < numVertex; w++)
+            {
+                if (spTable[v][k] + spTable[k][w] < spTable[v][w])
+                {
+                    spTable[v][w] = spTable[v][k] + spTable[k][w];
+                    pathMat[v][w] = pathMat[v][k];
+                }
+            }
+        }
+    }
 }
 #endif
